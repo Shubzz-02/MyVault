@@ -24,6 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Deploy to Heroku
+    - name: Set up JDK 11 
       uses: AkhileshNS/heroku-deploy@v3.12.12
       with: #below are the secrete
         heroku_api_key: ${{secrets.SBHEROKU_API_KEY}}
