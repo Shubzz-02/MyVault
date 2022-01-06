@@ -39,7 +39,7 @@ public class JwtUtils {
                 .setIssuedAt(new Date())
                 .setIssuer("MyVault")
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-           //     .claim("authorities", JSONObject.valueToString(userPrincipal.getAuthorities()))
+                .claim("authorities", JSONObject.valueToString(userPrincipal.getAuthorities()))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
