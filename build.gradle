@@ -14,10 +14,8 @@ repositories {
 }
 
 jar {
-   enabled = true
-   archiveClassifier = '' //use empty string
+    enabled = false
 }
-
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.6.2'
