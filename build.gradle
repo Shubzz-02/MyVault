@@ -13,6 +13,10 @@ repositories {
     mavenCentral()
 }
 
+jar {
+   enabled = true
+   archiveClassifier = '' //use empty string
+}
 
 
 dependencies {
