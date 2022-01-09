@@ -7,7 +7,6 @@ import com.shubzz.myvault.payload.response.MessageResponse;
 import com.shubzz.myvault.payload.response.UserDataResponse;
 import com.shubzz.myvault.repository.UserDataRepository;
 import com.shubzz.myvault.security.services.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +25,12 @@ import java.util.List;
 @RequestMapping("/api/mydata/")
 public class UserDataController {
 
-    @Autowired
+    final
     UserDataRepository userDataRepository;
+
+    public UserDataController(UserDataRepository userDataRepository) {
+        this.userDataRepository = userDataRepository;
+    }
 
     @GetMapping(value = "/all",
             produces = MediaType.APPLICATION_JSON_VALUE)

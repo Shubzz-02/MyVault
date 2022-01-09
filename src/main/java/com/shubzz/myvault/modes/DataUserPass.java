@@ -22,6 +22,7 @@ public class DataUserPass {
 
 
     public DataUserPass() {
+        //Is a non parametrized constructor
     }
 
     public String getUserId() {

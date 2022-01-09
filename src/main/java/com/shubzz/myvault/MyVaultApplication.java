@@ -1,6 +1,5 @@
 package com.shubzz.myvault;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -9,13 +8,17 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 @SpringBootApplication
 @EnableMongoRepositories
 public class MyVaultApplication extends SpringBootServletInitializer {
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public MyVaultApplication(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(MyVaultApplication.class, args);
@@ -24,7 +27,7 @@ public class MyVaultApplication extends SpringBootServletInitializer {
     @PostConstruct
     public void connection() {
         try {
-            stringRedisTemplate.getConnectionFactory().getConnection();
+            Objects.requireNonNull(stringRedisTemplate.getConnectionFactory()).getConnection();
         } catch (Exception e) {
             System.out.println("-------------------------------------------------------------------------------------------");
             System.out.println("- Redis host and port is not availables. please check application configuration file. -");

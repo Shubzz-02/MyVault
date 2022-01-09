@@ -13,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Component
@@ -34,7 +32,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 //        writer.println("HTTP Status 401 - " + authException.getMessage());
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(new ObjectMapper().writeValueAsString(new MessageResponse(authException.getMessage(),HttpStatus.UNAUTHORIZED.value())));
+        response.getWriter().write(new ObjectMapper().writeValueAsString(new MessageResponse(authException.getMessage(), HttpStatus.UNAUTHORIZED.value())));
         response.getWriter().flush();
         response.getWriter().close();
     }

@@ -14,27 +14,22 @@ import java.util.Set;
 
 @Document(collection = "users")
 public class User {
+    @DateTimeFormat
+    Date date;
     @Id
     private String id;
-
     @NotBlank
     @Size(max = 20)
     private String username;
-
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
-
     @NotBlank
     @Size(max = 120)
     private String password;
-
     @DBRef
     private Set<Role> roles = new HashSet<>();
-
-    @DateTimeFormat
-    Date date;
 
     public User() {
     }

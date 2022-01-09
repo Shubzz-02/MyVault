@@ -18,11 +18,9 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
     @Autowired
     BannedTokenRepository bannedTokenRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
     @Value("${myvault.app.jwtSecret}")
     private String jwtSecret;
 
@@ -52,7 +50,7 @@ public class JwtUtils {
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-            if (bannedTokenRepository.existsByToken(authToken))
+            if (Boolean.TRUE.equals(bannedTokenRepository.existsByToken(authToken)))
                 throw new TokenBannedException();
             return true;
         } catch (SignatureException e) {

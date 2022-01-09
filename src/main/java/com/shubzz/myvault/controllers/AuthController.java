@@ -14,7 +14,6 @@ import com.shubzz.myvault.repository.RoleRepository;
 import com.shubzz.myvault.repository.UserRepository;
 import com.shubzz.myvault.security.jwt.JwtUtils;
 import com.shubzz.myvault.security.services.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,23 +37,32 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
+    final
     AuthenticationManager authenticationManager;
 
-    @Autowired
+    final
     UserRepository userRepository;
 
-    @Autowired
+    final
     RoleRepository roleRepository;
 
-    @Autowired
+    final
     PasswordEncoder encoder;
 
-    @Autowired
+    final
     JwtUtils jwtUtils;
 
-    @Autowired
+    final
     BannedTokenRepository bannedTokenRepository;
+
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, BannedTokenRepository bannedTokenRepository) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.encoder = encoder;
+        this.jwtUtils = jwtUtils;
+        this.bannedTokenRepository = bannedTokenRepository;
+    }
 
 
     @PostMapping(value = "/login",
@@ -99,13 +107,13 @@ public class AuthController {
         if (error.hasErrors())
             return ResponseEntity.ok(new MessageResponse("Enter Valid values!", 0));
 
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (Boolean.TRUE.equals(userRepository.existsByUsername(signUpRequest.getUsername()))) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!", 3001));
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!", 3002));

@@ -4,7 +4,7 @@ package com.shubzz.myvault.payload.response;
 //TODO - Remove safely
 
 
-public class TokenRefreshResponse  {
+public class TokenRefreshResponse {
     private String accessToken;
     private String refreshToken;
     private String tokenType = "Bearer";
